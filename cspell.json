@@ -1,0 +1,13 @@
+{
+    "version": "0.2",
+    "language": "en,zh-CN",
+    "words": ["SaaS", "API"],
+    "flagWords": [],
+    "ignorePaths": [
+        "node_modules/**",
+        "dist/**",
+        "build/**",
+        "coverage/**"
+    ],
+    "allowCompoundWords": true
+} 

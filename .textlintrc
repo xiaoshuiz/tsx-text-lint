@@ -1,0 +1,27 @@
+{
+    "rules": {
+      "write-good": {
+        "passive": true,
+        "adverb": false,
+        "tooWordy": true,
+        "eprime": false,
+        "noAdverb": false
+      },
+      "en-capitalization": {
+        "allowHeading": false,
+        "allowLists": false,
+        "allowParagraphs": false
+      },
+      "terminology": {
+        "defaultTerms": true,
+        "terms": [
+          ["saas", "SaaS"],
+          ["api", "API"],
+          ["moego", "MoeGo"],
+          ["Moego", "MoeGo"],
+          ["moeGo", "MoeGo"]
+        ]
+      }
+    }
+  }
+  
