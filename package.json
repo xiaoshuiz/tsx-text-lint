@@ -39,5 +39,16 @@
     "textlint-rule-write-good": "^2.0.0",
     "ts-morph": "^16.0.0",
     "typescript": "^4.x.x"
-  }
+  },
+  "publisher": "xiaoshuiz",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xiaoshuiz/tsx-text-lint"
+  },
+  "icon": "images/icon.png",
+  "galleryBanner": {
+    "color": "#C80000",
+    "theme": "dark"
+  },
+  "license": "MIT"
 }
