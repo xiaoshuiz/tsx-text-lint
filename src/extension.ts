@@ -6,7 +6,6 @@ let diagnosticCollection: vscode.DiagnosticCollection;
 const project = new Project();
 
 export function activate(context: vscode.ExtensionContext) {
-  // 创建诊断集合
   diagnosticCollection =
     vscode.languages.createDiagnosticCollection("tsx-text-lint");
   context.subscriptions.push(diagnosticCollection);
@@ -28,11 +27,17 @@ export function activate(context: vscode.ExtensionContext) {
       }
     })
   );
+
+  // 手动触发当前编辑器文档
+  if (vscode.window.activeTextEditor) {
+    const doc = vscode.window.activeTextEditor.document;
+    if (doc.languageId === "typescriptreact") {
+      validateTsxDocument(doc);
+    }
+  }
 }
 
 async function validateTsxDocument(document: vscode.TextDocument) {
-  console.log(`开始检查文件: ${document.fileName}`);
-  
   const diagnostics: vscode.Diagnostic[] = [];
 
   try {
@@ -42,16 +47,13 @@ async function validateTsxDocument(document: vscode.TextDocument) {
       { overwrite: true }
     );
 
-    console.log('成功创建 SourceFile');
-
     const textLintErrors = await validateText(sourceFile);
-    console.log(`发现 ${textLintErrors.length} 个问题`);
-    
+
     // 将检查结果转换为 VSCode 诊断信息
     for (const error of textLintErrors) {
       const line = error.line - 1; // textlint 的行号从 1 开始，VSCode 从 0 开始
       const lineText = document.lineAt(line).text;
-      
+
       diagnostics.push(
         new vscode.Diagnostic(
           new vscode.Range(line, 0, line, lineText.length),
@@ -63,7 +65,7 @@ async function validateTsxDocument(document: vscode.TextDocument) {
 
     diagnosticCollection.set(document.uri, diagnostics);
   } catch (error) {
-    console.error('验证文档时发生错误:', error);
+    console.error("验证文档时发生错误:", error);
   }
 }
 

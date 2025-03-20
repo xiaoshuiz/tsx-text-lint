@@ -1,16 +1,12 @@
-import { execSync } from "child_process";
-import { existsSync } from "fs";
-import { resolve } from "path";
-import { fileURLToPath } from "url";
+import { execSync } from "node:child_process";
+import { resolve } from "node:path";
 import { TextLintEngine } from "textlint";
-import { Node, SourceFile } from "ts-morph";
+import type { Node, SourceFile } from "ts-morph";
 import { config } from "../constant/attr";
-
-const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
 // 缓存 TextLintEngine 实例
 const engine = new TextLintEngine({
-  configFile: resolve(__dirname, "..", ".textlintrc"),
+  configFile: resolve(__dirname, "../../.textlintrc"),
 });
 
 // 添加标识位
@@ -34,14 +30,14 @@ async function lintTexts(
     return true;
   }
   // 输出检查结果
-  results[0].messages.forEach((message: LintMessage) => {
+  for (const message of results[0].messages) {
     const { message: msg, ruleId } = message;
     console.log(
       `\x1b[31m错误\x1b[0m [${ruleId}] ${filePath} 第 ${lineNumber} 行：`,
       msg
     );
     hasError = true;
-  });
+  }
 
   return false;
 }
@@ -70,8 +66,8 @@ async function checkText(
             stdio: ["pipe", "pipe", "pipe"],
           }
         );
-      } catch (error: any) {
-        if (error.status === 1) {
+      } catch (error: unknown) {
+        if (error instanceof Error && "status" in error && error.status === 1) {
           console.log(
             `\x1b[31m拼写错误\x1b[0m [cspell] ${filePath}:${lineNumber}:`,
             `"${text}" 存在拼写错误`
@@ -216,8 +212,9 @@ export async function validateText(file: SourceFile): Promise<TextLintError[]> {
     currentIgnoreFile = null;
 
     const filePath = file.getFilePath();
-    const forEachDescendantAsArray = file.forEachDescendantAsArray();
     
+    const forEachDescendantAsArray = file.forEachDescendantAsArray();
+
     for (const node of forEachDescendantAsArray) {
       // 检查是否是忽略块的开始或结束
       checkIgnoreBlock(node);
@@ -240,15 +237,20 @@ export async function validateText(file: SourceFile): Promise<TextLintError[]> {
           const value = node.getChildAtIndex(2); // 获取属性值
           if (value && !hasIgnoreComment(node)) {
             const lineNumber = value.getStartLineNumber();
-            
+
             // 检查文本并收集错误
             const textLintResult = await engine.executeOnText(value.getText());
-            if (textLintResult.length > 0 && textLintResult[0].messages.length > 0) {
-              results.push(...textLintResult[0].messages.map(msg => ({
-                line: lineNumber,
-                message: msg.message,
-                ruleId: msg.ruleId
-              })));
+            if (
+              textLintResult.length > 0 &&
+              textLintResult[0].messages.length > 0
+            ) {
+              results.push(
+                ...textLintResult[0].messages.map((msg) => ({
+                  line: lineNumber,
+                  message: msg.message,
+                  ruleId: msg.ruleId,
+                }))
+              );
             }
           }
         }
@@ -257,26 +259,32 @@ export async function validateText(file: SourceFile): Promise<TextLintError[]> {
       // JSX 文本内容
       if (node.getKindName() === "JsxText") {
         const text = node.getText().trim();
+        
         if (!text || isFragmentedText(node) || hasIgnoreComment(node)) {
           continue;
         }
 
         const lineNumber = node.getStartLineNumber();
-        
+
         // 检查文本并收集错误
         const textLintResult = await engine.executeOnText(text);
-        if (textLintResult.length > 0 && textLintResult[0].messages.length > 0) {
-          results.push(...textLintResult[0].messages.map(msg => ({
-            line: lineNumber,
-            message: msg.message,
-            ruleId: msg.ruleId
-          })));
+        if (
+          textLintResult.length > 0 &&
+          textLintResult[0].messages.length > 0
+        ) {
+          results.push(
+            ...textLintResult[0].messages.map((msg) => ({
+              line: lineNumber,
+              message: msg.message,
+              ruleId: msg.ruleId,
+            }))
+          );
         }
       }
     }
   } catch (error) {
     console.error("检查过程发生错误:", error);
   }
-  
+
   return results;
 }
