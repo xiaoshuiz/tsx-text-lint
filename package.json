@@ -11,7 +11,8 @@
     "Linters"
   ],
   "activationEvents": [
-    "onLanguage:typescriptreact"
+    "onLanguage:typescriptreact",
+    "workspaceContains:**/*.tsx"
   ],
   "main": "./out/extension.js",
   "contributes": {
