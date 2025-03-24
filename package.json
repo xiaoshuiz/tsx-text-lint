@@ -2,9 +2,9 @@
   "name": "tsx-text-lint",
   "displayName": "TSX Text Lint",
   "description": "TSX 文本检查工具",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "engines": {
-    "vscode": "^1.97.0"
+    "vscode": "^1.60.0"
   },
   "type": "commonjs",
   "categories": [
@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@types/node": "^14.x.x",
-    "@types/vscode": "^1.97.0",
+    "@types/vscode": "^1.60.0",
     "@typescript-eslint/eslint-plugin": "^4.x.x",
     "@typescript-eslint/parser": "^4.x.x",
     "cspell": "^6.31.1",
