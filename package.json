@@ -26,6 +26,13 @@
     "text-lint": "node src/scripts/extract_text.mjs",
     "prepare": "husky install"
   },
+  "dependencies": {
+    "textlint": "^12.2.1",
+    "textlint-rule-en-capitalization": "^2.0.3",
+    "textlint-rule-terminology": "^3.0.4",
+    "textlint-rule-write-good": "^2.0.0",
+    "ts-morph": "^16.0.0"
+  },
   "devDependencies": {
     "@types/node": "^14.x.x",
     "@types/vscode": "^1.80.0",
@@ -34,11 +41,6 @@
     "cspell": "^6.31.1",
     "eslint": "^7.x.x",
     "husky": "^7.0.0",
-    "textlint": "^12.2.1",
-    "textlint-rule-en-capitalization": "^2.0.3",
-    "textlint-rule-terminology": "^3.0.4",
-    "textlint-rule-write-good": "^2.0.0",
-    "ts-morph": "^16.0.0",
     "typescript": "^4.x.x"
   },
   "publisher": "xiaoshuiz",
@@ -51,5 +53,12 @@
     "color": "#C80000",
     "theme": "dark"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "files": [
+    "out/**",
+    "node_modules/**",
+    "package.json",
+    "README.md",
+    "LICENSE"
+  ]
 }
