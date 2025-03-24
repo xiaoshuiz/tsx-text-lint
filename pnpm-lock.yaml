@@ -12,7 +12,7 @@ importers:
         specifier: ^14.x.x
         version: 14.18.63
       '@types/vscode':
-        specifier: ^1.60.0
+        specifier: ^1.80.0
         version: 1.97.0
       '@typescript-eslint/eslint-plugin':
         specifier: ^4.x.x
