@@ -13,12 +13,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-      - name: 从标签更新版本号
-        run: |
-          # 提取标签版本（去掉'v'前缀）
-          VERSION=${GITHUB_REF#refs/tags/v}
-          # 更新package.json中的版本
-          npm version $VERSION --no-git-tag-version
       - run: npm install
       - run: npm run compile
       - name: Publish to Visual Studio Marketplace

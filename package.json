@@ -24,7 +24,8 @@
     "watch": "tsc -watch -p ./",
     "lint": "eslint src --ext ts",
     "text-lint": "node src/scripts/extract_text.mjs",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "version": "node scripts/version.js"
   },
   "dependencies": {
     "textlint": "^12.2.1",
