@@ -54,12 +54,5 @@
     "color": "#C80000",
     "theme": "dark"
   },
-  "license": "MIT",
-  "files": [
-    "out/**",
-    "node_modules/**",
-    "package.json",
-    "README.md",
-    "LICENSE"
-  ]
+  "license": "MIT"
 }
