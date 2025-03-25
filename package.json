@@ -2,7 +2,7 @@
   "name": "tsx-text-lint",
   "displayName": "TSX Text Lint",
   "description": "TSX 文本检查工具",
-  "version": "0.0.3",
+  "version": "0.0.8",
   "engines": {
     "vscode": "^1.80.0"
   },
