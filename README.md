@@ -1,6 +1,9 @@
 # tsx-text-lint
 TS document jax text/attr lint plugin.
 
+2025.07.22
+- 支持了AI PR 分析文案。
+
 
 如果需要忽略检查 
 
